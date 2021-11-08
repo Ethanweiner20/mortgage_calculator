@@ -68,6 +68,13 @@ def prompt(message_key)
   puts "==> #{MESSAGES[message_key]}"
 end
 
+# Is _input_ a valid integer or float that is either positive or non-negative (as specified by _include_zero_)?
+def valid_number?(input, include_zero: false)
+  is_number = (valid_integer?(input) || valid_float?(input))
+  is_within_range = include_zero ? input.to_f >= 0 : input.to_f > 0
+  is_number && is_within_range
+end
+
 # Is _input_ a vald integer?
 def valid_integer?(input)
   input.to_i.to_s == input
@@ -76,13 +83,6 @@ end
 # Is _input_ a valid float?
 def valid_float?(input)
   input.to_f.to_s == input
-end
-
-# Is _input_ a valid integer or float that is either positive or non-negative (as specified by _include_zero_)?
-def valid_number?(input, include_zero: false)
-  is_number = (valid_integer?(input) || valid_float?(input))
-  is_within_range = include_zero ? input.to_f >= 0 : input.to_f > 0
-  is_number && is_within_range
 end
 
 # Format _payment_ as a string
