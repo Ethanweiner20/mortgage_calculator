@@ -29,9 +29,11 @@ Questions to consider:
 - How to express the interest rate? Whole number % or decimal?
 
 Assumptions:
-- Any of the user inputs (loan amount, apr, loan duration) can be decimal values (floats)
+- Any of the user inputs (loan amount, apr, loan duration) can be decimal
+values (floats)
 - Loan amount and duration must be positive numbers
-- APR must be non-negative (it can be 0, if the loan doesn't accumulate interest)
+- APR must be non-negative (it can be 0, if the loan doesn't accumulate
+  interest)
 
 =end
 
@@ -68,7 +70,8 @@ def prompt(message_key)
   puts "==> #{MESSAGES[message_key]}"
 end
 
-# Is _input_ a valid integer or float that is either positive or non-negative (as specified by _include_zero_)?
+# Is _input_ a valid integer or float that is either positive or non-negative
+# (as specified by _include_zero_)?
 def valid_number?(input, include_zero: false)
   is_number = (valid_integer?(input) || valid_float?(input))
   is_within_range = include_zero ? input.to_f >= 0 : input.to_f > 0
@@ -92,10 +95,12 @@ end
 
 # MAIN METHODS
 
-# Determine the monthly payment for a loan with a given _principle_, _monthly_interest_rate, and _loan_duration_
+# Determine the monthly payment for a loan with a given _principle_,
+# _monthly_interest_rate, and _loan_duration_
 def compute_monthly_payment(principle, monthly_interest_rate, loan_duration)
   return principle / loan_duration if monthly_interest_rate == 0
-  principle * (monthly_interest_rate / (1 - (1 + monthly_interest_rate)**(-loan_duration)))
+  principle * (monthly_interest_rate / (1 - (1 + monthly_interest_rate)**\
+  (-loan_duration)))
 end
 
 # Retrieve the loan amount from the user
@@ -148,7 +153,8 @@ loop do
   loan_amount = retrieve_loan_amount().to_f
   monthly_interest_rate = retrieve_apr().to_f / 100 / 12
   loan_months = retrieve_loan_years().to_f * 12
-  monthly_payment = compute_monthly_payment(loan_amount, monthly_interest_rate, loan_months)
+  monthly_payment = compute_monthly_payment(loan_amount, monthly_interest_rate,\
+                                            loan_months)
 
   prompt("result")
   puts format_payment(monthly_payment)
