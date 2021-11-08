@@ -1,0 +1,12 @@
+welcome: "Welcome to Mortgage Calculator! Calculate your monthly payments on any loan compounded monthly."
+loan_amount: "Enter your loan amount:"
+apr: "Enter your annual percentage rate (as a percentage):"
+loan_duration: "Enter your loan duration (in years):"
+result: "Your monthly loan payment is..."
+run_again: "Would you like to perform another calculation (y/n)?"
+finished: "Thank you for using Mortage Calculator!"
+
+# Invalid Inputs
+invalid_loan_amount: "Invalid loan amount. Please re-enter a positive number:" 
+invalid_apr: "Invalid apr. Please re-enter a non-negative number:" 
+invalid_loan_duration: "Invalid loan duration. Please re-enter a positive number:" 
