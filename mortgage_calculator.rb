@@ -65,30 +65,24 @@ MESSAGES = YAML.load_file('mortgage_calculator_messages.yml')
 
 # HELPER METHODS
 
-# Provide a prompt to the user with a message associated with _message_key_
 def prompt(message_key)
   puts "==> #{MESSAGES[message_key]}"
 end
 
-# Is _input_ a valid integer or float that is either positive or non-negative
-# (as specified by _include_zero_)?
 def valid_number?(input, include_zero: false)
   is_number = (valid_integer?(input) || valid_float?(input))
   is_within_range = include_zero ? input.to_f >= 0 : input.to_f > 0
   is_number && is_within_range
 end
 
-# Is _input_ a vald integer?
 def valid_integer?(input)
   input.to_i.to_s == input
 end
 
-# Is _input_ a valid float?
 def valid_float?(input)
   input.to_f.to_s == input
 end
 
-# Format _payment_ as a string
 def format_payment(payment)
   "$#{format('%.2f', payment)}"
 end
@@ -101,15 +95,12 @@ end
 
 # MAIN METHODS
 
-# Determine the monthly payment for a loan with a given _principle_,
-# _monthly_interest_rate, and _loan_duration_
 def compute_monthly_payment(principle, monthly_interest_rate, loan_duration)
   return principle / loan_duration if monthly_interest_rate == 0
   principle * (monthly_interest_rate / (1 - (1 + monthly_interest_rate)**\
   (-loan_duration)))
 end
 
-# Retrieve the loan amount from the user
 def retrieve_loan_amount
   prompt("loan_amount")
 
@@ -120,10 +111,9 @@ def retrieve_loan_amount
     prompt("invalid_loan_amount")
   end
 
-  loan_amount_input
+  loan_amount_input.to_f
 end
 
-# Retrieve the annual percentage rate from the user, as a percentage
 def retrieve_apr
   prompt("apr")
 
@@ -134,10 +124,9 @@ def retrieve_apr
     prompt("invalid_apr")
   end
 
-  apr_input
+  apr_input.to_f
 end
 
-# Retrieve the loan duration in years from the user
 def retrieve_loan_years
   prompt("loan_duration")
 
@@ -148,7 +137,7 @@ def retrieve_loan_years
     prompt("invalid_loan_duration")
   end
 
-  loan_years_input
+  loan_years_input.to_f
 end
 
 def retrieve_yes_no
@@ -164,7 +153,7 @@ def retrieve_yes_no
   again_input
 end
 
-def display_result(monthly_payment)
+def display_monthly_payment(monthly_payment)
   prompt("result")
   puts format_payment(monthly_payment)
 end
@@ -174,15 +163,19 @@ end
 prompt("welcome")
 
 loop do
-  loan_amount = retrieve_loan_amount().to_f
-  monthly_interest_rate = retrieve_apr().to_f / 100 / 12
-  loan_months = retrieve_loan_years().to_f * 12
+  loan_amount = retrieve_loan_amount()
+  apr = retrieve_apr()
+  monthly_interest_rate = apr / 100 / 12
+  loan_years = retrieve_loan_years()
+  loan_months = loan_years * 12
+
   monthly_payment = compute_monthly_payment(loan_amount, monthly_interest_rate,\
                                             loan_months)
 
-  display_result(monthly_payment)
+  display_monthly_payment(monthly_payment)
 
-  break unless ['yes', 'y'].include?(retrieve_yes_no())
+  play_again = retrieve_yes_no()
+  break unless play_again == "yes" || play_again == "y"
 end
 
 prompt("finished")
