@@ -151,6 +151,24 @@ def retrieve_loan_years
   loan_years_input
 end
 
+def retrieve_yes_no
+  prompt("run_again")
+
+  again_input = ''
+  loop do
+    again_input = retrieve_input().downcase
+    break if ['yes', 'y', 'no', 'n'].include?(again_input)
+    prompt("invalid_yes_no")
+  end
+
+  again_input
+end
+
+def display_result(monthly_payment)
+  prompt("result")
+  puts format_payment(monthly_payment)
+end
+
 # PROGRAM BODY
 
 prompt("welcome")
@@ -162,11 +180,9 @@ loop do
   monthly_payment = compute_monthly_payment(loan_amount, monthly_interest_rate,\
                                             loan_months)
 
-  prompt("result")
-  puts format_payment(monthly_payment)
+  display_result(monthly_payment)
 
-  prompt("run_again")
-  break unless retrieve_input().downcase == "y"
+  break unless ['yes', 'y'].include?(retrieve_yes_no())
 end
 
 prompt("finished")
