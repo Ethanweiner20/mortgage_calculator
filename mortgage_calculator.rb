@@ -93,6 +93,12 @@ def format_payment(payment)
   "$#{format('%.2f', payment)}"
 end
 
+def retrieve_input
+  input = gets.chomp
+  system("clear")
+  input
+end
+
 # MAIN METHODS
 
 # Determine the monthly payment for a loan with a given _principle_,
@@ -109,7 +115,7 @@ def retrieve_loan_amount
 
   loan_amount_input = ''
   loop do
-    loan_amount_input = gets.chomp
+    loan_amount_input = retrieve_input()
     break if valid_number?(loan_amount_input)
     prompt("invalid_loan_amount")
   end
@@ -123,7 +129,7 @@ def retrieve_apr
 
   apr_input = ''
   loop do
-    apr_input = gets.chomp
+    apr_input = retrieve_input()
     break if valid_number?(apr_input, include_zero: true)
     prompt("invalid_apr")
   end
@@ -137,7 +143,7 @@ def retrieve_loan_years
 
   loan_years_input = ''
   loop do
-    loan_years_input = gets.chomp
+    loan_years_input = retrieve_input()
     break if valid_number?(loan_years_input)
     prompt("invalid_loan_duration")
   end
@@ -160,7 +166,7 @@ loop do
   puts format_payment(monthly_payment)
 
   prompt("run_again")
-  break unless gets.chomp.downcase == "y"
+  break unless retrieve_input().downcase == "y"
 end
 
 prompt("finished")
